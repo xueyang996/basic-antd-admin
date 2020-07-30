@@ -1,0 +1,10 @@
+  
+{
+  "name": "SearchTable",
+  "description": "Demo block of umi, with antd.",
+  "dependencies": {
+  },
+  "block": {
+    "category": "脚手架"
+  }
+}
