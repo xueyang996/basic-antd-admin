@@ -1,18 +1,20 @@
 export default {
-  queryRouteList: '/routes',
+  queryPolicyList: 'post /smurfs/policy/page/{pageSize}/{pageNum}',
+  queryPolicyType: '/smurfs/policy/type/list',
+  queryPolicyPublisher: '/smurfs/policy/publisher',
+  queryComBase: 'post /shield/app/tag/basic',
+  checkBindStatus: '/shield/app/enterprise/user/binding/status',
+  queryComExtra: 'post /shield/app/tag/extra',
+  saveEnterprise: 'post /shield/app/talent/enterprise/save',
+  matchEnterprise: 'post /smurfs/match',
+  queryComMatchList: 'post /smurfs/match/result/page/{pageSize}/{pageNum}',
+  // 匹配报告
+  queryReportHistory: 'post /shield/app/smurf/record/history',
+  queryReportOverview: '/smurfs/match/result/overview',
+  queryReportChart: 'post /smurfs/match/evaluate/report',
 
-  queryUserInfo: '/user',
-  logoutUser: '/user/logout',
-  loginUser: 'POST /user/login',
-
-  queryUser: '/user/:id',
-  queryUserList: '/users',
-  updateUser: 'Patch /user/:id',
-  createUser: 'POST /user',
-  removeUser: 'DELETE /user/:id',
-  removeUserList: 'POST /users/delete',
-
-  queryPostList: '/posts',
-
-  queryDashboard: '/dashboard',
-}
+  // 政策详情
+  queryPolicyBaseInfo: '/smurfs/policy/statement/{id}',
+  queryPolicyContent: '/smurfs/policy/statement/{id}/outline',
+  queryPolicyTagInfo: 'post /smurfs/policy/user/info',
+};

@@ -1,38 +1,47 @@
-import request from 'utils/request'
-import { apiPrefix } from 'utils/config'
+/* eslint-disable no-undef */
+import request from 'utils/request';
+import { apiPrefix } from 'utils/config';
 
-import api from './api'
+import api from './api';
 
-const gen = params => {
-  let url = apiPrefix + params
-  let method = 'GET'
+const REG_PARAMS = /{([a-zA-Z]+)}/g;
 
-  const paramsArray = params.split(' ')
+const gen = (params) => {
+  let url = apiPrefix[__API_PREFIX_FLAG__] + params;
+  let method = 'GET';
+
+  const paramsArray = params.split(' ');
   if (paramsArray.length === 2) {
-    method = paramsArray[0]
-    url = apiPrefix + paramsArray[1]
+    method = paramsArray[0];
+    url = apiPrefix[__API_PREFIX_FLAG__] + paramsArray[1];
   }
 
-  return function(data) {
+  return function (data) {
+    let resultUrl = url;
+    // 替换url 中 的参数
+    let match;
+    while ((match = REG_PARAMS.exec(url))) {
+      if (data[match[1]]) {
+        resultUrl = resultUrl.replace(match[0], data[match[1]]);
+      }
+    }
+    // if (data.pageSize) {
+    //   let originUrl = url;
+    //   resultUrl = originUrl.replace('{pageSize}', data.pageSize).replace('{pageNum}', data.pageNum);
+    // } else if() {
+
+    // }
     return request({
-      url,
+      url: resultUrl,
       data,
       method,
-    })
-  }
-}
+    });
+  };
+};
 
-const APIFunction = {}
+const APIFunction = {};
 for (const key in api) {
-  APIFunction[key] = gen(api[key])
+  APIFunction[key] = gen(api[key]);
 }
 
-APIFunction.queryWeather = params => {
-  params.key = 'i7sau1babuzwhycn'
-  return request({
-    url: `${apiPrefix}/weather/now.json`,
-    data: params,
-  })
-}
-
-export default APIFunction
+export default APIFunction;
