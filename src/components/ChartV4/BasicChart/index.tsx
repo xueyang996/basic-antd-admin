@@ -16,7 +16,7 @@ import {
   defaultColors,
   linearDefaultColors,
   linear90DefaultColors,
-} from '@/constants/chartColors';
+} from '@/constants/chartColor';
 
 import styles from './index.less';
 
@@ -26,7 +26,7 @@ import styles from './index.less';
 // });
 
 export type BasicChartT = {
-  data: [];
+  data: any[];
   theme?: string;
   axisX?: string;
   axisY?: string;
@@ -87,6 +87,7 @@ export type BasicChartT = {
   selfLegend?: number;
   selfLegndKeys?: any[];
 
+  annotationImage?: any[];
   annotationArc?: any[];
   annotationText?: string | any[];
   annotationPosition?: any[];
@@ -160,6 +161,7 @@ const BasicColumn: FC<BasicChartT> = props => {
     selfLegend = '',
     selfLegndKeys = [],
     annotationArc,
+    annotationImage,
     annotationText = '',
     annotationPosition,
     annotationStyle,
@@ -269,7 +271,6 @@ const BasicColumn: FC<BasicChartT> = props => {
             padding={padding}
             animate={false}
             scale={scale}
-            interactions={['active-region']}
           >
             <Legend
               visible={showLegend}
@@ -290,6 +291,7 @@ const BasicColumn: FC<BasicChartT> = props => {
                     key={'text' + index}
                     position={item.position}
                     content={item.text}
+                    top={true}
                     style={item.style}
                   />
                 ))}
@@ -302,6 +304,23 @@ const BasicColumn: FC<BasicChartT> = props => {
                     <Annotation.Arc
                       animate={false}
                       top={item.top}
+                      key={index + 'item'}
+                      start={item.start}
+                      end={item.end}
+                      style={item.style}
+                    />
+                  );
+                })}
+              </Fragment>
+            )}
+            {annotationImage && (
+              <Fragment>
+                {annotationImage.map((item, index) => {
+                  return (
+                    <Annotation.Image
+                      animate={false}
+                      src={item.src}
+                      // top={item.top}
                       key={index + 'item'}
                       start={item.start}
                       end={item.end}
