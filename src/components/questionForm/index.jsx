@@ -74,13 +74,13 @@ const getItem = props => {
         </Checkbox.Group>
       );
       break;
-      default:
-        node = <div></div>
+    default:
+      break;
   }
   return node;
 };
 
-// const { Option } = Select;
+const { Option } = Select;
 const layout = {
   labelCol: { span: 24 },
   wrapperCol: { span: 24 },
@@ -109,7 +109,7 @@ const QuestionForm = props => {
     let changeValue = changedValues[changedKey] || [];
     const changeItem = list.find(item => item.key === changedKey) || {};
     // 对于多选中含有以上均无等选项特殊处理
-    const index = changeValue.indexOf('以上均无');
+    const index = changeValue instanceof Array && changeValue.indexOf('以上均无') || -1;
     if (
       changeItem.type === 'INPUT_CHECKBOX' &&
       changeValue.length > 0 &&
@@ -120,7 +120,7 @@ const QuestionForm = props => {
       } else if (index > 0) {
         changeValue = ['以上均无'];
       }
-      formResult.setFieldsValue({
+      formResult?.setFieldsValue({
         [changedKey]: changeValue,
       });
       changedValues[changedKey] = changeValue;
@@ -148,7 +148,7 @@ const QuestionForm = props => {
       // 获取当前问题答案
       const key = list[currentStep] && list[currentStep].key;
       const notEmptyValue = (key && value2[key]) || '';
-      const emptyFlag = notEmptyValue.length;
+      const emptyFlag = notEmptyValue.length || typeof notEmptyValue === 'number';
       if (!emptyFlag) {
         return message.error('录入值不能为空');
       }
