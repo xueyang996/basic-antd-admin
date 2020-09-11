@@ -60,7 +60,7 @@ const MatchStatus = (props: MatchStatusP) => {
         textAlign: 'center',
       },
     });
-  } else if (data > 60) {
+  } else if (data > 20) {
     colorGeo = [
       'item',
       ['l (270) 0:rgba(148,213,255,1) 1:rgba(19,162,255,1)', '#eeeff4'],

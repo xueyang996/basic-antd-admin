@@ -132,3 +132,12 @@ export function getPreviewInfo({ name, url }) {
   window.open(PREVIEW_PREFIX + url)
   return null
 }
+
+/**
+ * 判定表单值是否为空值
+ * @param {*} formValue 表达值
+ * @returns boolean  true: 非控值，false：空值
+ */
+export const isNotEmptyFormValue = formValue => {
+  return !!(formValue && formValue.length) || typeof formValue === 'number';
+};

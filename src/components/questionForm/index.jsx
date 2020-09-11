@@ -12,6 +12,7 @@ import {
 } from 'antd';
 import classNames from 'classnames';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import { isNotEmptyFormValue } from "@/utils/util";
 
 import styles from './index.less';
 
@@ -144,9 +145,10 @@ const QuestionForm = props => {
       // 获取当前问题答案
       const key = list[currentStep] && list[currentStep].key;
       const notEmptyValue = key && value2[key];
-      const emptyFlag =
-        (notEmptyValue && notEmptyValue.length) ||
-        typeof notEmptyValue === 'number';
+      // const emptyFlag =
+      //   (notEmptyValue && notEmptyValue.length) ||
+      //   typeof notEmptyValue === 'number';
+      const emptyFlag = isNotEmptyFormValue(notEmptyValue)
       if (!emptyFlag) {
         return message.error('录入值不能为空');
       }
