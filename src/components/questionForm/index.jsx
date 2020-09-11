@@ -108,13 +108,9 @@ const QuestionForm = props => {
     const changedKey = Object.keys(changedValues)[0] || '';
     let changeValue = changedValues[changedKey] || [];
     const changeItem = list.find(item => item.key === changedKey) || {};
-    // 对于多选中含有以上均无等选项特殊处理
-    const index = changeValue instanceof Array && changeValue.indexOf('以上均无') || -1;
-    if (
-      changeItem.type === 'INPUT_CHECKBOX' &&
-      changeValue.length > 0 &&
-      index !== -1
-    ) {
+    if (changeItem.type === 'INPUT_CHECKBOX' && changeValue.length > 0) {
+      // 对于多选中含有以上均无等选项特殊处理
+      const index = changeValue.indexOf('以上均无');
       if (index === 0 && changeValue.length > 1) {
         changeValue.shift();
       } else if (index > 0) {
@@ -147,8 +143,10 @@ const QuestionForm = props => {
       const value2 = allValues || formValues.allValues;
       // 获取当前问题答案
       const key = list[currentStep] && list[currentStep].key;
-      const notEmptyValue = (key && value2[key]) || '';
-      const emptyFlag = notEmptyValue.length || typeof notEmptyValue === 'number';
+      const notEmptyValue = key && value2[key];
+      const emptyFlag =
+        (notEmptyValue && notEmptyValue.length) ||
+        typeof notEmptyValue === 'number';
       if (!emptyFlag) {
         return message.error('录入值不能为空');
       }
